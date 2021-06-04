@@ -82,7 +82,7 @@ RUN curl -sSL https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
 
     <template id="runbot.docker_install_odoo_debs">
       <t t-set="odoo_branch" t-value="odoo_branch or 'master'"/>
-ADD https://raw.githubusercontent.com/odoo/odoo/<t t-esc="values['odoo_branch']"/>/debian/control /tmp/control.txt
+ADD https://raw.githubusercontent.com/dhx/odoo/<t t-esc="values['odoo_branch']"/>/debian/control /tmp/control.txt
 RUN apt-get update \
     &amp;&amp; sed -n '/^Depends:/,/^[A-Z]/p' /tmp/control.txt \
        | awk '/^ [a-z]/ { gsub(/,/,"") ; print }' | sort -u \
@@ -94,7 +94,7 @@ RUN apt-get update \
     </template>
 
     <template id="runbot.docker_install_odoo_python_requirements">
-ADD https://raw.githubusercontent.com/odoo/odoo/<t t-esc="values['odoo_branch']"/>/requirements.txt /root/requirements.txt
+ADD https://raw.githubusercontent.com/dhx/odoo/<t t-esc="values['odoo_branch']"/>/requirements.txt /root/requirements.txt
 RUN <t t-esc="values['python_version']"/> -m pip install setuptools wheel &amp;&amp; \
     <t t-esc="values['python_version']"/> -m pip install --no-cache-dir -r /root/requirements.txt &amp;&amp; \
     <t t-esc="values['python_version']"/> -m pip install <t t-esc="values['additional_pip']"/>
